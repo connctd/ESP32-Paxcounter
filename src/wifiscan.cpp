@@ -38,11 +38,12 @@ IRAM_ATTR void wifi_sniffer_packet_handler(void *buff,
   const wifi_ieee80211_mac_hdr_t *hdr = &ipkt->hdr;
 
   if ((cfg.rssilimit) &&
-      (ppkt->rx_ctrl.rssi < cfg.rssilimit)) // rssi is negative value
+      (ppkt->rx_ctrl.rssi < cfg.rssilimit)) { // rssi is negative value
     ESP_LOGD(TAG, "WiFi RSSI %d -> ignoring (limit: %d)", ppkt->rx_ctrl.rssi,
              cfg.rssilimit);
-  else // count seen MAC
+  } else {
     mac_add((uint8_t *)hdr->addr2, ppkt->rx_ctrl.rssi, MAC_SNIFF_WIFI);
+  } // count seen MAC
 }
 
 // Software-timer driven Wifi channel rotation callback function
